@@ -1,5 +1,6 @@
 package video.game;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 /**
@@ -87,6 +88,8 @@ public class Game implements Runnable{
           g.drawImage(Assets.background,0,0,width,height,null);
           bar.render(g);
           ball.render(g);
+          // Prevents stutter on Linux.
+          Toolkit.getDefaultToolkit().sync();
           bs.show();
           g.dispose();
         }
