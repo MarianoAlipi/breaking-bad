@@ -8,38 +8,48 @@ import java.awt.image.BufferStrategy;
  * @author MarcelA00821875
  * @author MarianoA00822247
  */
-public class Game implements Runnable{
-    
-    private BufferStrategy bs;
-    private Graphics g;
-    private Display display;
-    String title;
-    private int width;
-    private int height;
-    private Thread thread;              
-    private boolean running;            //sets up the game
-    private Bar bar;                    //use a bar
-    private Ball ball;                  //use a ball
-    private KeyManager keyManager;      //manages the keyboard
-    
-    public Game(String title, int width, int height){
-    this.title = title;
-    this.width = width;
-    this.height = height;
-    running = false;
-    keyManager = new KeyManager();
+public class Game implements Runnable {
+        private BufferStrategy bs;
+        private Graphics g;
+        private Display display;
+        String title;
+        private int width;
+        private int height;
+        private Thread thread;              
+        private boolean running;            //sets up the game
+        private Bar bar;                    //use a bar
+        private Ball ball;                  //use a ball
+        private Block[] blocks;             // the blocks to break
+        private KeyManager keyManager;      //manages the keyboard
+
+        public Game(String title, int width, int height){
+        this.title = title;
+        this.width = width;
+        this.height = height;
+        running = false;
+        keyManager = new KeyManager();
     }
     
     public int getWidth(){return width;}
     public int getHeight(){return height;}
     
     private void init(){
-      display = new Display(title, getWidth(), getHeight());
-      Assets.init();
-      bar = new Bar(getWidth() / 2 - 50, getHeight() -50, 100, 25, this);
-      ball = new Ball(getWidth() / 4, getHeight() -300, 40, 40, this);
-      //starts to listen the keyboard input
-      display.getJframe().addKeyListener(keyManager);
+        display = new Display(title, getWidth(), getHeight());
+        Assets.init();
+        bar = new Bar(getWidth() / 2 - 50, getHeight() -50, 100, 25, this);
+        ball = new Ball(getWidth() / 4, getHeight() -300, 40, 40, this);
+    
+        int blockNo = 0;
+        blocks = new Block[48];
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 8; j++) {
+                blocks[blockNo] = new Block(i * 80 + 10, j * 30 + 10);
+                blockNo++;
+            }
+        }
+    
+        //starts to listen the keyboard input
+        display.getJframe().addKeyListener(keyManager);
     }
     @Override
     public void run() {
@@ -89,6 +99,10 @@ public class Game implements Runnable{
           g.drawImage(Assets.background,0,0,width,height,null);
           bar.render(g);
           ball.render(g);
+          
+          for (int i = 0; i < blocks.length; i++)
+              blocks[i].render(g);
+          
           // Prevents stutter on Linux.
           Toolkit.getDefaultToolkit().sync();
           bs.show();
