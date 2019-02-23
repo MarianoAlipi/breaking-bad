@@ -43,7 +43,7 @@ public class Game implements Runnable {
         blocks = new Block[48];
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 8; j++) {
-                blocks[blockNo] = new Block(i * 80 + 10, j * 30 + 10);
+                blocks[blockNo] = new Block(i * 80 + 10, j * 30 + 10, this);
                 blockNo++;
             }
         }
@@ -82,6 +82,17 @@ public class Game implements Runnable {
         //advance bar with collision
         bar.tick();
         ball.tick();
+        
+        // Make the blocks check for collisions with the ball
+        for (Block block : blocks) {
+            if (block.isVisible()) {
+                block.tick();
+                if (block.isCollision()) {
+                    block.setVisible(false);
+                }
+            }
+        }
+        
     }
     
     private void render() {
@@ -100,8 +111,10 @@ public class Game implements Runnable {
           bar.render(g);
           ball.render(g);
           
-          for (int i = 0; i < blocks.length; i++)
-              blocks[i].render(g);
+          for (Block block : blocks) {
+              if (block.isVisible())
+                  block.render(g);
+          }
           
           // Prevents stutter on Linux.
           Toolkit.getDefaultToolkit().sync();
@@ -126,5 +139,13 @@ public class Game implements Runnable {
             ie.printStackTrace();
           }
         }
-    }   
+    }
+
+    /**
+     * Get the ball
+     * @return ball
+     */
+    public Ball getBall() {
+        return ball;
+    }
 }

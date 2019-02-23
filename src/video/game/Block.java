@@ -15,15 +15,26 @@ import java.awt.Rectangle;
  */
 public class Block extends Item {
     
-    public Block(int x, int y) {
+    private Game game;
+    private boolean collision;
+    private boolean visible;    // to show or hide the block whether it's destroyed or not
+    
+    public Block(int x, int y, Game g) {
         super(x, y);
         this.width = 75;
         this.height = 25;
+        this.game = g;
         this.hitbox = new Rectangle(x, y, width, height);
+        this.visible = true;
     }
 
     @Override
     public void tick() {
+        // Check for collision with ball
+        if (getHitbox().intersects(game.getBall().getHitbox())) {
+            setCollision(true);
+            game.getBall().setYSpeed(-1 * game.getBall().getYSpeed());
+        }
     }
 
     @Override
@@ -32,6 +43,46 @@ public class Block extends Item {
         g.fillRect(x, y, width, height);
         g.setColor(Color.red);
         g.drawRect(x, y, width, height);
+    }
+
+    /**
+     * Get the hitbox
+     * @return hitbox
+     */
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
+
+    /**
+     * Get collision
+     * @return collision
+     */
+    public boolean isCollision() {
+        return collision;
+    }
+
+    /**
+     * Get visible
+     * @return visible
+     */
+    public boolean isVisible() {
+        return visible;
+    }
+    
+    /**
+     * Set collision
+     * @param collision 
+     */
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
+
+    /**
+     * Set visible
+     * @param visible 
+     */
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
     
 }

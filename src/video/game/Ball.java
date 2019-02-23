@@ -23,8 +23,8 @@ public class Ball extends Item{
       this.width = width;
       this.height = height;
       this.game = game;
-      this.xSpeed = 1;
-      this.ySpeed = 2;
+      this.xSpeed = 2;
+      this.ySpeed = 3;
       this.hitbox = new Rectangle(x, y, width, height);
     }
     
@@ -70,10 +70,16 @@ public class Ball extends Item{
     
     //displays aka renders
     @Override
-    public void render(Graphics g){
+    public void render(Graphics g) {
       g.drawImage(Assets.ball, getX(), getY(), getWidth(), getHeight(), null);
     }
-    //Make sure collision animation lasts the nessesary seconds 
-    //tick starts the process
-    //render makes sure that it finishes at the seconds necessary
+
+    /**
+     * Get the hitbox
+     * @return hitbox
+     */
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
+    
 }
