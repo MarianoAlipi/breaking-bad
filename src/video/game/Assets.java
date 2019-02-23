@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 /**
  *
  * @author MarcelA00821875
+ * @author MarianoA00822247
  */
 public class Assets {
     public static BufferedImage background;

@@ -5,7 +5,8 @@ import java.awt.event.KeyListener;
 
 /**
  *
- * @author MarceA00821875
+ * @author MarcelA00821875
+ * @author MarianoA00822247
  */
 public class KeyManager implements KeyListener{
     public boolean up;    //flag to move up the player

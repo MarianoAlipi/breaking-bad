@@ -5,7 +5,7 @@ import java.awt.Graphics;
 /**
  *
  * @author MarcelA00821875
- * @author Mariano
+ * @author MarianoA00822247
  */
 public class Ball extends Item{
 

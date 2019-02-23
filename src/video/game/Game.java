@@ -6,6 +6,7 @@ import java.awt.image.BufferStrategy;
 /**
  *
  * @author MarcelA00821875
+ * @author MarianoA00822247
  */
 public class Game implements Runnable{
     

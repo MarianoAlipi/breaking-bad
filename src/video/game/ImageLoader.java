@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 /**
  *
  * @author MarcelA00821875
+ * @author MarianoA00822247
  */
 public class ImageLoader {
     public static BufferedImage loadImage(String path){

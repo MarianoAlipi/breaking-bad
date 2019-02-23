@@ -7,6 +7,7 @@ import java.awt.Dimension;
 /**
  *
  * @author MarcelA00821875
+ * @author MarianoA00822247
  */
 public class Display {
     private JFrame jframe; 
