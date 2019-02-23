@@ -67,4 +67,12 @@ public class Bar extends Item{
     //Make sure collision animation lasts the nessesary seconds 
     //tick starts the process
     //render makes sure that it finishes at the seconds necessary
+
+    /**
+     * Get the hitbox
+     * @return hitbox
+     */
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
 }

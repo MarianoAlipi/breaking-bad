@@ -17,7 +17,7 @@ public class Ball extends Item{
     private int xSpeed, ySpeed;
     private boolean collision;
     private Game game;
-    public Ball(int x, int y, int width, int height, Game game){
+    public Ball(int x, int y, int width, int height, Game game) {
       //send x and y to the Item constructor
       super(x, y);
       this.width = width;
@@ -66,6 +66,10 @@ public class Ball extends Item{
         
         // Relocate hitbox
         hitbox.setLocation(getX(), getY());
+        
+        // Check for collision with bar
+        if (getHitbox().intersects(game.getBar().getHitbox()))
+            setYSpeed(-1 * getYSpeed());
     }
     
     //displays aka renders

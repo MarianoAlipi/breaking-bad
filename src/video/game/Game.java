@@ -142,6 +142,14 @@ public class Game implements Runnable {
     }
 
     /**
+     * Get the bar
+     * @return 
+     */
+    public Bar getBar() {
+        return bar;
+    }
+    
+    /**
      * Get the ball
      * @return ball
      */
