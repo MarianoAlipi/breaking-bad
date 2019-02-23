@@ -13,8 +13,6 @@ public class Bar extends Item{
         public enum Direcction
         to save the direction and stuff
     */
-    private int width;
-    private int height;
     private int speed;
     private boolean collision;
     private Game game;

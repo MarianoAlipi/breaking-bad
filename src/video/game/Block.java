@@ -13,9 +13,6 @@ import java.awt.Graphics;
  * @author MarianoA00822247
  */
 public class Block extends Item {
-
-    private int width;
-    private int height;
     
     public Block(int x, int y) {
         super(x, y);

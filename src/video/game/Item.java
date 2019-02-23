@@ -10,6 +10,8 @@ import java.awt.Graphics;
 public abstract class Item {
     protected int x; //Stores x position
     protected int y; //Stores y position
+    protected int width;
+    protected int height;
     /**
      * Set initial values to create the item
      * @param x <b>x</b> position of the object
