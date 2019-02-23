@@ -1,6 +1,7 @@
 package video.game;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Bar extends Item{
     private int speed;
     private boolean collision;
     private Game game;
+    
     public Bar(int x, int y, int width, int height, Game game){
       //send x and y to the Item constructor
       super(x, y);
@@ -23,6 +25,7 @@ public class Bar extends Item{
       this.height = height;
       this.game = game;
       this.speed = 5;
+      this.hitbox = new Rectangle(x, y, width, height);
     }
     
     public int getWidth(){return width;}
@@ -52,6 +55,9 @@ public class Bar extends Item{
         } else if (getX() <= 0) {
           setX(0);
         }
+        
+        // Relocate hitbox
+        hitbox.setLocation(getX(), getY());
     }
     //displays aka renders
     @Override

@@ -1,6 +1,7 @@
 package video.game;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Ball extends Item{
       this.game = game;
       this.xSpeed = 1;
       this.ySpeed = 2;
+      this.hitbox = new Rectangle(x, y, width, height);
     }
     
     public int getWidth()  {return width;}
@@ -61,7 +63,11 @@ public class Ball extends Item{
             setY(0);
             setYSpeed(-1 * getYSpeed());
         }
+        
+        // Relocate hitbox
+        hitbox.setLocation(getX(), getY());
     }
+    
     //displays aka renders
     @Override
     public void render(Graphics g){

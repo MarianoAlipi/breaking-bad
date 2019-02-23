@@ -1,6 +1,7 @@
 package video.game;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  *
@@ -12,6 +13,7 @@ public abstract class Item {
     protected int y; //Stores y position
     protected int width;
     protected int height;
+    protected Rectangle hitbox;
     /**
      * Set initial values to create the item
      * @param x <b>x</b> position of the object

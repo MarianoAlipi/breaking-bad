@@ -7,6 +7,7 @@ package video.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 /**
  * @author MarcelA00821875
@@ -16,13 +17,13 @@ public class Block extends Item {
     
     public Block(int x, int y) {
         super(x, y);
-        width = 75;
-        height = 25;
+        this.width = 75;
+        this.height = 25;
+        this.hitbox = new Rectangle(x, y, width, height);
     }
 
     @Override
     public void tick() {
-        
     }
 
     @Override
