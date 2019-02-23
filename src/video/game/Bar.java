@@ -39,26 +39,25 @@ public class Bar extends Item{
     
     //tick is used to check bar
     @Override
-    public void tick(){
-        
-    //moving bar depending on flags
-        if(game.getKeyManager().left){
+    public void tick() {
+        //moving bar depending on flags
+        if (game.getKeyManager().left) {
           setX(getX() - getSpeed());
         }
-        if(game.getKeyManager().right){
+        if (game.getKeyManager().right) {
           setX(getX() + getSpeed());
         }
       
-      //reset x position and y position if collision
-      if(getX() + 100 >= game.getWidth()){
-        setX(game.getWidth() - 100);
-      }else if(getX() <= 0){
-        setX(0);
-      }
+        //reset x position and y position if collision
+        if (getX() + getWidth() >= game.getWidth()) {
+          setX(game.getWidth() - getWidth());
+        } else if (getX() <= 0) {
+          setX(0);
+        }
     }
     //displays aka renders
     @Override
-    public void render(Graphics g){
+    public void render(Graphics g) {
       g.drawImage(Assets.bar, getX(), getY(), getWidth(), getHeight(), null);
     }
     //Make sure collision animation lasts the nessesary seconds 

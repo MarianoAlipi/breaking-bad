@@ -35,13 +35,13 @@ public class Game implements Runnable{
     private void init(){
       display = new Display(title, getWidth(), getHeight());
       Assets.init();
-      bar = new Bar(getWidth() - 300, getHeight() -50, 100, 25, this);
-      ball = new Ball(getWidth() - 300, getHeight() -300, 40, 40, this);
+      bar = new Bar(getWidth() / 2 - 50, getHeight() -50, 100, 25, this);
+      ball = new Ball(getWidth() / 4, getHeight() -300, 40, 40, this);
       //starts to listen the keyboard input
       display.getJframe().addKeyListener(keyManager);
     }
     @Override
-    public void run(){
+    public void run() {
         init();
         //frames per second
         int fps = 50;
@@ -66,14 +66,14 @@ public class Game implements Runnable{
     
     public KeyManager getKeyManager(){return keyManager;}
     
-    private void tick(){
+    private void tick() {
         keyManager.tick();
         //advance bar with collision
         bar.tick();
         ball.tick();
     }
     
-    private void render(){
+    private void render() {
         //get the buffer strategy from the display
         bs = display.getCanvas().getBufferStrategy();
         /*if its null, we define one with 3 buffers to display images of the game but 

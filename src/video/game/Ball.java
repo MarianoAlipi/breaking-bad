@@ -15,7 +15,7 @@ public class Ball extends Item{
     */
     private int width;
     private int height;
-    private int speed;
+    private int xSpeed, ySpeed;
     private boolean collision;
     private Game game;
     public Ball(int x, int y, int width, int height, Game game){
@@ -24,37 +24,45 @@ public class Ball extends Item{
       this.width = width;
       this.height = height;
       this.game = game;
-      this.speed = 5;
+      this.xSpeed = 1;
+      this.ySpeed = 2;
     }
     
-    public int getWidth(){return width;}
-    public int getHeight(){return height;}
-    public int getSpeed() {return speed;}
+    public int getWidth()  {return width;}
+    public int getHeight() {return height;}
+    public int getXSpeed() {return xSpeed;}
+    public int getYSpeed() {return ySpeed;}
     public boolean getCollision() {return collision;}
     
-    public void setWidth(int width){this.width = width;}
-    public void setHeight(int height){this.height = height;}
-    public void setSpeed(int speed) {this.speed = speed;}
+    public void setWidth(int width)   {this.width = width;}
+    public void setHeight(int height) {this.height = height;}
+    public void setXSpeed(int xSpeed) {this.xSpeed = xSpeed;}
+    public void setYSpeed(int ySpeed) {this.ySpeed = ySpeed;}
     public void setCollision(boolean collision) {this.collision = collision;}
     
     //tick is used to check bar
     @Override
-    public void tick(){
+    public void tick() {
         
-    //moving bar depending on flags
-        if(game.getKeyManager().left){
-          setX(getX() - getSpeed());
+        // Move ball
+        setX( getX() + getXSpeed() );
+        setY( getY() + getYSpeed() );
+        
+        // Reset position and bounce if out of screen
+        if (getX() + getWidth() > game.getWidth()) {
+            setX(game.getWidth() - getWidth());
+            setXSpeed(-1 * getXSpeed());
+        } else if (getX() < 0) {
+            setX(0);
+            setXSpeed(-1 * getXSpeed());
         }
-        if(game.getKeyManager().right){
-          setX(getX() + getSpeed());
+        if (getY() + getHeight() > game.getHeight()) {
+            setY(game.getHeight() - getHeight());
+            setYSpeed(-1 * getYSpeed());
+        } else if (getY() < 0) {
+            setY(0);
+            setYSpeed(-1 * getYSpeed());
         }
-      
-      //reset x position and y position if collision
-      if(getX() + 40 >= game.getWidth()){
-        setX(game.getWidth() - 40);
-      }else if(getX() <= 0){
-        setX(0);
-      }
     }
     //displays aka renders
     @Override
