@@ -23,8 +23,8 @@ public class Ball extends Item{
       this.width = width;
       this.height = height;
       this.game = game;
-      this.xSpeed = 2;
-      this.ySpeed = 3;
+      this.xSpeed = 3;
+      this.ySpeed = 4;
       this.hitbox = new Rectangle(x, y, width, height);
     }
     

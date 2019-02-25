@@ -81,7 +81,6 @@ public class Game implements Runnable {
         keyManager.tick();
         //advance bar with collision
         bar.tick();
-        ball.tick();
         
         // Make the blocks check for collisions with the ball
         for (Block block : blocks) {
@@ -92,6 +91,8 @@ public class Game implements Runnable {
                 }
             }
         }
+        
+        ball.tick();
         
     }
     
