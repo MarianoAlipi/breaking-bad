@@ -25,13 +25,20 @@ public class Bar extends Item{
       this.height = height;
       this.game = game;
       this.speed = 5;
-      this.hitbox = new Rectangle(x, y, width, height);
+      this.hitbox = new Rectangle(x, y, width, height / 6);
     }
     
     public int getWidth(){return width;}
     public int getHeight(){return height;}
     public int getSpeed() {return speed;}
     public boolean getCollision() {return collision;}
+    /**
+     * Get the hitbox
+     * @return hitbox
+     */
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
     
     public void setWidth(int width){this.width = width;}
     public void setHeight(int height){this.height = height;}
@@ -62,17 +69,13 @@ public class Bar extends Item{
     //displays aka renders
     @Override
     public void render(Graphics g) {
-      g.drawImage(Assets.bar, getX(), getY(), getWidth(), getHeight(), null);
+        g.drawImage(Assets.bar, getX(), getY(), getWidth(), getHeight(), null);
+        
+        // Draw the hitbox (for debugging)
+        //g.drawRect((int)getHitbox().getX(), (int)getHitbox().getY(), (int)getHitbox().getWidth(), (int)getHitbox().getHeight());
     }
     //Make sure collision animation lasts the nessesary seconds 
     //tick starts the process
     //render makes sure that it finishes at the seconds necessary
 
-    /**
-     * Get the hitbox
-     * @return hitbox
-     */
-    public Rectangle getHitbox() {
-        return hitbox;
-    }
 }
