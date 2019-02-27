@@ -55,13 +55,20 @@ public class Game implements Runnable {
         bar = new Bar(getWidth() / 2 - 50, getHeight() - 50, 100, 25, this);
         ball = new Ball(getWidth() / 4, getHeight() - 300, 30, 30, this);
 
-        int blockNo = 0;
+        int blockNo = 0, hits = 3, counter = 0;
         blocks = new Block[48];
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 8; j++) {
-                blocks[blockNo] = new Block(i * 80 + 10, j * 30 + 10, this);
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 6; j++) {
+                blocks[blockNo] = new Block(j * 80 + 10, i * 30 + 10, hits, this);
                 blockNo++;
             }
+            
+            // Decrease by one the number of hits every two rows.
+            if (++counter >= 2) {
+                counter = 0;
+                hits = (hits - 1 <= 0) ? 1 : hits - 1;
+            }
+            
         }
 
         //starts to listen the keyboard input
@@ -119,9 +126,6 @@ public class Game implements Runnable {
             for (Block block : blocks) {
                 if (block.isVisible()) {
                     block.tick();
-                    if (block.isCollision()) {
-                        block.setVisible(false);
-                    }
                 }
             }
 

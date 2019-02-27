@@ -30,8 +30,6 @@ public class Ball extends Item{
       this.hitbox = new Rectangle(x, y, width, height);
     }
     
-    public int getWidth()  {return width;}
-    public int getHeight() {return height;}
     public double getXSpeed() {return xSpeed;}
     public double getYSpeed() {return ySpeed;}
     public double getSpeed() {return speed;}
@@ -44,8 +42,6 @@ public class Ball extends Item{
         return hitbox;
     }
     
-    public void setWidth(int width)   {this.width = width;}
-    public void setHeight(int height) {this.height = height;}
     public void setXSpeed(double xSpeed) {this.xSpeed = xSpeed;}
     public void setYSpeed(double ySpeed) {this.ySpeed = ySpeed;}
     public void setSpeed(double speed) {this.speed = speed;}
