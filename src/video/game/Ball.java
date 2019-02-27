@@ -98,8 +98,6 @@ public class Ball extends Item{
             else if (pos > barWidth)
                 pos = barWidth;
             
-            System.out.println("pos = " + pos);
-            
             // The resulting angle the ball will be bounced at.
             double angle;
             // Flag: bounced on the left or right side?
