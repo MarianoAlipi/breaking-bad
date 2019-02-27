@@ -145,7 +145,6 @@ public class Game implements Runnable {
         } else {
             g = bs.getDrawGraphics();
             
-            g.setFont(pauseFont);
             
             g.drawImage(Assets.background, 0, 0, width, height, null);
             bar.render(g);
@@ -158,6 +157,7 @@ public class Game implements Runnable {
             }
             
             if (paused) {
+                g.setFont(pauseFont);
                 g.setColor(Color.black);
                 g.drawString("PAUSED", getWidth() / 6 + 18, getHeight() / 2);
             }
