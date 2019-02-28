@@ -109,7 +109,6 @@ public class Game implements Runnable {
         keyManager.tick();
 
         pauseIntervalCounter++;
-
         if (keyManager.p) {
             if (pauseIntervalCounter > pauseInterval) {
                 paused = !paused;
