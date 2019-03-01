@@ -25,9 +25,11 @@ public class Game implements Runnable {
     private int pauseInterval;          // to set an interval for pausing
     private int pauseIntervalCounter;   // to count the frames between pauses
     private Font pauseFont;             // the font for the "PAUSED" text
+    private Font scoreFont;             // the font for the score display
     private Bar bar;                    //use a bar
     private Ball ball;                  //use a ball
     private Block[] blocks;             // the blocks to break
+    private int score;                  // the player's score
     private KeyManager keyManager;      //manages the keyboard
 
     public Game(String title, int width, int height) {
@@ -38,6 +40,8 @@ public class Game implements Runnable {
         paused = false;
         pauseInterval = 10;
         pauseFont = new Font("Arial", Font.BOLD, 70);
+        scoreFont = new Font("Arial", Font.BOLD, 30);
+        score = 0;
         keyManager = new KeyManager();
     }
 
@@ -59,7 +63,7 @@ public class Game implements Runnable {
         blocks = new Block[48];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 6; j++) {
-                blocks[blockNo] = new Block(j * 80 + 10, i * 30 + 10, hits, this);
+                blocks[blockNo] = new Block(j * 80 + 10, i * 30 + 40, hits, this);
                 blockNo++;
             }
             
@@ -155,6 +159,10 @@ public class Game implements Runnable {
                 }
             }
             
+            // Display the score
+            g.setFont(scoreFont);
+            g.drawString("Score: " + getScore(), 40, 30);
+            
             if (paused) {
                 g.setFont(pauseFont);
                 g.setColor(Color.black);
@@ -205,5 +213,21 @@ public class Game implements Runnable {
      */
     public Ball getBall() {
         return ball;
+    }
+
+    /**
+     * Get score
+     * @return score
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * Set score
+     * @param score 
+     */
+    public void setScore(int score) {
+        this.score = score;
     }
 }

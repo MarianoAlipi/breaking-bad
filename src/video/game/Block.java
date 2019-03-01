@@ -44,19 +44,21 @@ public class Block extends Item {
             if (getHitboxUpDown().intersects(game.getBall().getHitbox())) {
                 if (--hits <= 0) {
                     setVisible(false);
-                    game.getBall().setCollision(true);
                 }
 
                 game.getBall().setYSpeed(-1 * game.getBall().getYSpeed());
+                game.getBall().setCollision(true);
+                game.setScore(game.getScore() + 1);
             }
             // Check for side collision
             else if (getHitboxSides().intersects(game.getBall().getHitbox())) {
                 if (--hits <= 0) {
                     setVisible(false);
-                    game.getBall().setCollision(true);
                 }
 
                 game.getBall().setXSpeed(-1 * game.getBall().getXSpeed());
+                game.getBall().setCollision(true);
+                game.setScore(game.getScore() + 1);
             }
         }
     }
