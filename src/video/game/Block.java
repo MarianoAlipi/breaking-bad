@@ -44,6 +44,7 @@ public class Block extends Item {
             if (getHitboxUpDown().intersects(game.getBall().getHitbox())) {
                 if (--hits <= 0) {
                     setVisible(false);
+                    game.setBlocksLeft(game.getBlocksLeft() - 1);
                 }
 
                 game.getBall().setYSpeed(-1 * game.getBall().getYSpeed());
@@ -54,6 +55,7 @@ public class Block extends Item {
             else if (getHitboxSides().intersects(game.getBall().getHitbox())) {
                 if (--hits <= 0) {
                     setVisible(false);
+                    game.setBlocksLeft(game.getBlocksLeft() - 1);
                 }
 
                 game.getBall().setXSpeed(-1 * game.getBall().getXSpeed());

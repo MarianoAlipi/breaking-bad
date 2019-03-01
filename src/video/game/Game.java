@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,6 +24,7 @@ public class Game implements Runnable {
     private Thread thread;
     private boolean running;            //sets up the game
     private boolean paused;             // to pause the game
+    private boolean won;                // to check when the player wins
     private int pauseInterval;          // to set an interval for pausing
     private int pauseIntervalCounter;   // to count the frames between pauses
     private Font pauseFont;             // the font for the "PAUSED" text
@@ -29,6 +32,7 @@ public class Game implements Runnable {
     private Bar bar;                    //use a bar
     private Ball ball;                  //use a ball
     private Block[] blocks;             // the blocks to break
+    private int blocksLeft;                // the number of blocks left
     private int score;                  // the player's score
     private KeyManager keyManager;      //manages the keyboard
 
@@ -38,6 +42,7 @@ public class Game implements Runnable {
         this.height = height;
         running = false;
         paused = false;
+        won = false;
         pauseInterval = 10;
         pauseFont = new Font("Arial", Font.BOLD, 70);
         scoreFont = new Font("Arial", Font.BOLD, 30);
@@ -60,7 +65,8 @@ public class Game implements Runnable {
         ball = new Ball(getWidth() / 4, getHeight() - 300, 30, 30, this);
 
         int blockNo = 0, hits = 3, counter = 0;
-        blocks = new Block[48];
+        blocksLeft = 48;
+        blocks = new Block[blocksLeft];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 6; j++) {
                 blocks[blockNo] = new Block(j * 80 + 10, i * 30 + 40, hits, this);
@@ -119,8 +125,15 @@ public class Game implements Runnable {
                 pauseIntervalCounter = 0;
             }
         }
+        
+        if (won) {
+            if (keyManager.r) {
+                // Restart the game
+                
+            }
+        }
 
-        if (!paused) {
+        if (!paused && !won) {
 
             // Move the bar with collision
             bar.tick();
@@ -130,6 +143,11 @@ public class Game implements Runnable {
                 if (block.isVisible()) {
                     block.tick();
                 }
+            }
+            
+            if (getBlocksLeft() <= 0) {
+                // GAME OVER: Player wins
+                won = true;
             }
 
             ball.tick();
@@ -161,14 +179,18 @@ public class Game implements Runnable {
             
             // Display the score
             g.setFont(scoreFont);
+            g.setColor(Color.black);
             g.drawString("Score: " + getScore(), 40, 30);
             
             if (paused) {
                 g.setFont(pauseFont);
-                g.setColor(Color.black);
                 g.drawString("PAUSED", getWidth() / 6 + 18, getHeight() / 2);
             }
-                
+             
+            if (won) {
+                g.setFont(pauseFont);
+                g.drawString("YOU WIN!", getWidth() / 6 + 5, getHeight() / 2);                
+            }
 
             // Prevents stutter on Linux.
             Toolkit.getDefaultToolkit().sync();
@@ -224,10 +246,26 @@ public class Game implements Runnable {
     }
 
     /**
+     * Get blocksLeft
+     * @return blocksLeft
+     */
+    public int getBlocksLeft() {
+        return blocksLeft;
+    }
+    
+    /**
      * Set score
      * @param score 
      */
     public void setScore(int score) {
         this.score = score;
+    }
+
+    /**
+     * Set blocksLeft
+     * @param blocksLeft 
+     */
+    public void setBlocksLeft(int blocksLeft) {
+        this.blocksLeft = blocksLeft;
     }
 }
