@@ -6,6 +6,7 @@
 package video.game;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -16,16 +17,17 @@ import java.awt.Rectangle;
 public class Block extends Item {
     
     private Game game;
-    private boolean collision;
+    private int hits;           // the number of hits left to destroy the block
     private boolean visible;    // to show or hide the block whether it's destroyed or not
     
     private Rectangle hitboxSides;
     private Rectangle hitboxUpDown;
     
-    public Block(int x, int y, Game g) {
+    public Block(int x, int y, int hits, Game g) {
         super(x, y);
         this.width = 75;
         this.height = 25;
+        this.hits = hits;
         this.game = g;
         this.hitboxSides = new Rectangle(x, y + (height / 6), width, (int) (height * 0.7));
         this.hitboxUpDown = new Rectangle(x + (width / 15), y, (int) (width * 0.87), height);
@@ -36,16 +38,26 @@ public class Block extends Item {
     public void tick() {
         // Check for collision with ball
         
-        // Check for side collision
-        if (getHitboxSides().intersects(game.getBall().getHitbox())) {
-            setCollision(true);
-            game.getBall().setXSpeed(-1 * game.getBall().getXSpeed());
-        }
-        
-        // Check for top and bottom collision
-        if (getHitboxUpDown().intersects(game.getBall().getHitbox())) {
-            setCollision(true);
-            game.getBall().setYSpeed(-1 * game.getBall().getYSpeed());
+        // To limit the ball to only one hit per tick
+        if (!game.getBall().isCollision()) {
+             // Check for top and bottom collision
+            if (getHitboxUpDown().intersects(game.getBall().getHitbox())) {
+                if (--hits <= 0) {
+                    setVisible(false);
+                    game.getBall().setCollision(true);
+                }
+
+                game.getBall().setYSpeed(-1 * game.getBall().getYSpeed());
+            }
+            // Check for side collision
+            else if (getHitboxSides().intersects(game.getBall().getHitbox())) {
+                if (--hits <= 0) {
+                    setVisible(false);
+                    game.getBall().setCollision(true);
+                }
+
+                game.getBall().setXSpeed(-1 * game.getBall().getXSpeed());
+            }
         }
     }
 
@@ -63,8 +75,13 @@ public class Block extends Item {
         // Top and bottom hitbox
         g.setColor(Color.green);
         g.drawRect(hitboxUpDown.x, hitboxUpDown.y, hitboxUpDown.width, hitboxUpDown.height);
+        
+        // Draw number of hits
+        g.setColor(Color.black);
+        g.setFont(new Font("Arial", Font.PLAIN, 12));
+        g.drawString("" + getHits(), getX() + getWidth() / 2, getY() + getHeight() / 2 + 5);
     }
-
+    
     /**
      * Get the sides' hitbox
      * @return hitboxSides
@@ -80,13 +97,13 @@ public class Block extends Item {
     public Rectangle getHitboxUpDown() {
         return hitboxUpDown;
     }
-    
+
     /**
-     * Get collision
-     * @return collision
+     * Get hits
+     * @return hits
      */
-    public boolean isCollision() {
-        return collision;
+    public int getHits() {
+        return hits;
     }
 
     /**
@@ -96,13 +113,13 @@ public class Block extends Item {
     public boolean isVisible() {
         return visible;
     }
-    
+
     /**
-     * Set collision
-     * @param collision 
+     * Set hits
+     * @param hits 
      */
-    public void setCollision(boolean collision) {
-        this.collision = collision;
+    public void setHits(int hits) {
+        this.hits = hits;
     }
 
     /**

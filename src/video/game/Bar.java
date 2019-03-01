@@ -28,8 +28,6 @@ public class Bar extends Item{
       this.hitbox = new Rectangle(x, y, width, height / 6);
     }
     
-    public int getWidth(){return width;}
-    public int getHeight(){return height;}
     public int getSpeed() {return speed;}
     public boolean getCollision() {return collision;}
     /**
@@ -40,8 +38,6 @@ public class Bar extends Item{
         return hitbox;
     }
     
-    public void setWidth(int width){this.width = width;}
-    public void setHeight(int height){this.height = height;}
     public void setSpeed(int speed) {this.speed = speed;}
     public void setCollision(boolean collision) {this.collision = collision;}
     

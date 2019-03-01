@@ -26,15 +26,14 @@ public class Ball extends Item{
       this.xSpeed = 4;
       this.ySpeed = 5;
       this.speed = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
+      this.collision = false;
       this.hitbox = new Rectangle(x, y, width, height);
     }
     
-    public int getWidth()  {return width;}
-    public int getHeight() {return height;}
     public double getXSpeed() {return xSpeed;}
     public double getYSpeed() {return ySpeed;}
     public double getSpeed() {return speed;}
-    public boolean getCollision() {return collision;}
+    public boolean isCollision() {return collision;}
     /**
      * Get the hitbox
      * @return hitbox
@@ -43,8 +42,6 @@ public class Ball extends Item{
         return hitbox;
     }
     
-    public void setWidth(int width)   {this.width = width;}
-    public void setHeight(int height) {this.height = height;}
     public void setXSpeed(double xSpeed) {this.xSpeed = xSpeed;}
     public void setYSpeed(double ySpeed) {this.ySpeed = ySpeed;}
     public void setSpeed(double speed) {this.speed = speed;}
@@ -76,6 +73,7 @@ public class Ball extends Item{
         
         // Relocate hitbox
         hitbox.setLocation(getX(), getY());
+        setCollision(false);
         
         // Check for collision with bar
         // The farther from the center, the more horizontal the angle is.
