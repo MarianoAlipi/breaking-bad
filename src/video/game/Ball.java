@@ -9,7 +9,6 @@ import java.awt.Rectangle;
  * @author MarianoA00822247
  */
 public class Ball extends Item{
-
     /*!Important: Now we have to use 
         public enum Direcction
         to save the direction and stuff

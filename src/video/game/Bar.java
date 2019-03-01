@@ -57,22 +57,21 @@ public class Bar extends Item{
         }
       
         //reset x position and y position if collision
-        if (getX() + getWidth() >= game.getWidth()) {
+        if (getX() + getWidth() >= game.getWidth()){
           setX(game.getWidth() - getWidth());
         } else if (getX() <= 0) {
           setX(0);
         }
         
         // Relocate hitbox
-        hitbox.setLocation(getX(), getY());
+        hitbox.setLocation(getX(), getY()+15);
     }
     //displays aka renders
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.bar, getX(), getY(), getWidth(), getHeight(), null);
-        
         // Draw the hitbox (for debugging)
-        //g.drawRect((int)getHitbox().getX(), (int)getHitbox().getY(), (int)getHitbox().getWidth(), (int)getHitbox().getHeight());
+       //g.drawRect((int)getHitbox().getX(), (int)getHitbox().getY(), (int)getHitbox().getWidth(), (int)getHitbox().getHeight());
     }
     //Make sure collision animation lasts the nessesary seconds 
     //tick starts the process

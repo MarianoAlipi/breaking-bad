@@ -20,7 +20,7 @@ public class Assets {
 
     public static void init() {
         background = ImageLoader.loadImage("/images/background.png");
-        bar = ImageLoader.loadImage("/images/bar.png");
+        bar = ImageLoader.loadImage("/images/policeCar.png");
         ball = ImageLoader.loadImage("/images/ball.png");
 
     }
