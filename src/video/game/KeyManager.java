@@ -15,7 +15,8 @@ public class KeyManager implements KeyListener{
     public boolean right; //flag to move right the player
     public boolean p;     //flag to pause the game
     public boolean r;     //flag to restart the game
-    public boolean g; //flag to save the game data
+    public boolean g;     //flag to save the game data
+    public boolean c;     // flag to load the game date
     
     public boolean keys[]; //stores all the flags for every key
     
@@ -45,5 +46,6 @@ public class KeyManager implements KeyListener{
       p = keys[KeyEvent.VK_P];
       r = keys[KeyEvent.VK_R];
       g = keys[KeyEvent.VK_G];
+      c = keys[KeyEvent.VK_C];
     }
 }

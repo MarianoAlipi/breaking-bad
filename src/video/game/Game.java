@@ -5,6 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,11 +36,12 @@ public class Game implements Runnable {
     private Bar bar;                    //use a bar
     private Ball ball;                  //use a ball
     private Block[] blocks;             // the blocks to break
-    private int blocksLeft;                // the number of blocks left
+    private int blocksLeft;             // the number of blocks left
     private int score;                  // the player's score
     private KeyManager keyManager;      //manages the keyboard
     private String fileName;            // save-file's name
-    private boolean saved;              // flag to show a saved message for a few frames
+    private byte savedLoaded;           // flag to show a saved message for a few frames. 0: nonoe 1: saved 2; loaded
+    private int framesCounter;          // to count the duration of the save/loaded message
 
     public Game(String title, int width, int height) {
         this.title = title;
@@ -52,7 +56,8 @@ public class Game implements Runnable {
         score = 0;
         keyManager = new KeyManager();
         fileName = "BreakingBad-save.txt";
-        saved = false;
+        savedLoaded = 0;
+        framesCounter = 0;
     }
 
     public int getWidth() {
@@ -127,6 +132,10 @@ public class Game implements Runnable {
         if (keyManager.g) {
             saveData();
         }
+        // Load the game data
+        if (keyManager.c) {
+            loadData();
+        }
         
         pauseIntervalCounter++;
         if (keyManager.p) {
@@ -191,15 +200,26 @@ public class Game implements Runnable {
             g.setFont(scoreFont);
             g.setColor(Color.black);
             g.drawString("Score: " + getScore(), 40, 30);
-            
+           
             if (paused) {
                 g.setFont(pauseFont);
                 g.drawString("PAUSED", getWidth() / 6 + 18, getHeight() / 2);
             }
             
-            if (saved) {
-                saved = false;
-                showMessage(g, "SAVED");
+            if (savedLoaded == 1) {
+                if (framesCounter++ <= 60)
+                    showMessage(g, "SAVED");
+                else {
+                    savedLoaded = 0;
+                    framesCounter = 0;
+                }
+            } else if (savedLoaded == 2) {
+                if (framesCounter++ <= 60)
+                    showMessage(g, "LOADED");
+                else {
+                    savedLoaded = 0;
+                    framesCounter = 0;
+                }
             }
             
             if (won) {
@@ -257,13 +277,70 @@ public class Game implements Runnable {
             fileOut.close();
             
             System.out.println("Game saved.");
-            saved = true;
+            savedLoaded = 1;
             
         } catch (IOException ex) {
             System.out.println("ERROR: couldn't save data.");
             ex.printStackTrace();
         }
         
+    }
+    
+    public void loadData() {
+        BufferedReader fileIn;
+        try {
+            fileIn = new BufferedReader(new FileReader(fileName));
+            
+            try {
+                String line;
+                
+                // Score
+                line = fileIn.readLine();
+                setScore( Integer.parseInt(line) );
+                
+                String values[];
+                
+                // ball x, y, xSpeed, ySpeed
+                line = fileIn.readLine();
+                values = line.split(" ");
+                
+                getBall().setX( Integer.parseInt(values[0]) );
+                getBall().setY( Integer.parseInt(values[1]) );
+                getBall().setXSpeed( Double.parseDouble(values[2]) );
+                getBall().setYSpeed( Double.parseDouble(values[3]) );
+                
+                // bar x and y
+                line = fileIn.readLine();
+                values = line.split(" ");
+                
+                getBar().setX( Integer.parseInt(values[0]) );
+                getBar().setY( Integer.parseInt(values[1]) );
+                
+                
+                // Blocks' hits
+                line = fileIn.readLine();
+                values = line.split(" ");
+                
+                for (int i = 0; i < blocks.length; i++) {
+                    blocks[i].setHits( Integer.parseInt(values[i]) );
+                    if (blocks[i].getHits() <= 0) {
+                        blocks[i].setVisible(false);
+                    } else
+                        blocks[i].setVisible(true);
+                }
+                
+                fileIn.close();
+                
+                savedLoaded = 2;
+                
+            } catch (IOException ex) {
+                System.out.println("ERROR: IOException");
+                ex.printStackTrace();
+            }
+            
+        } catch (FileNotFoundException e) {
+            // The file doesn't exist.
+        }
     }
     
     /**
