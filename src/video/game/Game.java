@@ -255,7 +255,7 @@ public class Game implements Runnable {
     }
     
     /**
-     * Saves the data to a file
+     * Saves the data to a file.
      */
     public void saveData() {
         try {
@@ -286,6 +286,9 @@ public class Game implements Runnable {
         
     }
     
+    /**
+     * Reads the saved data from a file.
+     */
     public void loadData() {
         BufferedReader fileIn;
         try {
@@ -321,10 +324,13 @@ public class Game implements Runnable {
                 line = fileIn.readLine();
                 values = line.split(" ");
                 
+                setBlocksLeft(blocks.length);
+                
                 for (int i = 0; i < blocks.length; i++) {
                     blocks[i].setHits( Integer.parseInt(values[i]) );
                     if (blocks[i].getHits() <= 0) {
                         blocks[i].setVisible(false);
+                        setBlocksLeft(getBlocksLeft() - 1);
                     } else
                         blocks[i].setVisible(true);
                 }
@@ -352,7 +358,7 @@ public class Game implements Runnable {
         g.setColor(Color.black);
         g.setFont(pauseFont);
         
-        g.drawString(text, getWidth() / 4 + 5, getHeight() / 2);
+        g.drawString(text, getWidth() / 5, getHeight() / 2 + 60);
     }
 
     /**
