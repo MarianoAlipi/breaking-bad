@@ -72,7 +72,7 @@ public class Game implements Runnable {
         display = new Display(title, getWidth(), getHeight());
         Assets.init();
         bar = new Bar(getWidth() / 2 - 50, getHeight() - 50, 100, 50, this);
-        ball = new Ball(getWidth() / 4, getHeight() - 300, 30, 30, this);
+        ball = new Ball(getWidth() / 8, getHeight() / 2 + 30, 30, 30, this);
 
         int blockNo = 0, hits = 3, counter = 0;
         blocksLeft = 48;
@@ -127,7 +127,7 @@ public class Game implements Runnable {
 
         // Get keyboard input
         keyManager.tick();
-
+        
         // Save the game data
         if (keyManager.g) {
             saveData();
@@ -135,6 +135,7 @@ public class Game implements Runnable {
         // Load the game data
         if (keyManager.c) {
             loadData();
+            setGameState((byte)0);
         }
         
         pauseIntervalCounter++;
@@ -149,7 +150,7 @@ public class Game implements Runnable {
         if (gameState == 1 || gameState == 2) {
             if (keyManager.r) {
                 // Restart the game
-                
+                restartGame();
             }
         }
         
@@ -228,12 +229,16 @@ public class Game implements Runnable {
             // If the player lost
             if (gameState == 1) {
                 g.setFont(pauseFont);
-                g.drawString("GAME OVER", getWidth() / 12, getHeight() / 2);                
+                g.drawString("GAME OVER", getWidth() / 12, getHeight() / 2); 
+                g.setFont(new Font("Arial", Font.PLAIN, 40));
+                g.drawString("Press R to restart.", getWidth() / 6 + 15, getHeight() / 2 + 40);
             }
             // If the player won
             else if (gameState == 2) {
                 g.setFont(pauseFont);
-                g.drawString("YOU WIN!", getWidth() / 6 + 5, getHeight() / 2);                
+                g.drawString("YOU WIN!", getWidth() / 6 + 5, getHeight() / 2); 
+                g.setFont(new Font("Arial", Font.PLAIN, 40));
+                g.drawString("Press R to restart.", getWidth() / 6 + 15, getHeight() / 2 + 40);
             }
 
             // Prevents stutter on Linux.
@@ -260,6 +265,34 @@ public class Game implements Runnable {
             } catch (InterruptedException ie) {
                 ie.printStackTrace();
             }
+        }
+    }
+    
+    /**
+     * Restarts the game.
+     */
+    public void restartGame() {
+        setScore(0);
+        setGameState((byte)0);
+        setPaused(false);
+        bar = new Bar(getWidth() / 2 - 50, getHeight() - 50, 100, 50, this);
+        ball = new Ball(getWidth() / 8, getHeight() / 2 + 30, 30, 30, this);
+
+        int blockNo = 0, hits = 3, counter = 0;
+        blocksLeft = 48;
+        blocks = new Block[blocksLeft];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 6; j++) {
+                blocks[blockNo] = new Block(j * 80 + 10, i * 30 + 40, hits, this);
+                blockNo++;
+            }
+            
+            // Decrease by one the number of hits every two rows.
+            if (++counter >= 2) {
+                counter = 0;
+                hits = (hits - 1 <= 0) ? 1 : hits - 1;
+            }
+            
         }
     }
     
@@ -429,10 +462,19 @@ public class Game implements Runnable {
     }
 
     /**
+     * Set paused
+     * @param paused 
+     */
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+    }
+    
+    /**
      * Set gameState
      * @param gameState 
      */
     public void setGameState(byte gameState) {
         this.gameState = gameState;
     }
+
 }
