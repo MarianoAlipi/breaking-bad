@@ -15,13 +15,9 @@ public class KeyManager implements KeyListener{
     public boolean right; //flag to move right the player
     public boolean p;     //flag to pause the game
     public boolean r;     //flag to restart the game
-    public boolean speed; //flag to change speed
+    public boolean g; //flag to save the game data
     
     public boolean keys[]; //stores all the flags for every key
-    
-    public boolean hasSpeed(){return this.speed;}
-    
-    public void setSpeed(boolean speed){this.speed = speed;}
     
     public KeyManager() {
       keys = new boolean[256];
@@ -41,12 +37,13 @@ public class KeyManager implements KeyListener{
         keys[e.getKeyCode()] = false;
     }
     
-    public void tick(){
+    public void tick() {
       up = keys[KeyEvent.VK_UP];
       down = keys[KeyEvent.VK_DOWN];
       left = keys[KeyEvent.VK_LEFT];
       right = keys[KeyEvent.VK_RIGHT];
       p = keys[KeyEvent.VK_P];
       r = keys[KeyEvent.VK_R];
+      g = keys[KeyEvent.VK_G];
     }
 }

@@ -5,8 +5,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  *
@@ -35,6 +36,8 @@ public class Game implements Runnable {
     private int blocksLeft;                // the number of blocks left
     private int score;                  // the player's score
     private KeyManager keyManager;      //manages the keyboard
+    private String fileName;            // save-file's name
+    private boolean saved;              // flag to show a saved message for a few frames
 
     public Game(String title, int width, int height) {
         this.title = title;
@@ -48,6 +51,8 @@ public class Game implements Runnable {
         scoreFont = new Font("Arial", Font.BOLD, 30);
         score = 0;
         keyManager = new KeyManager();
+        fileName = "BreakingBad-save.txt";
+        saved = false;
     }
 
     public int getWidth() {
@@ -118,6 +123,11 @@ public class Game implements Runnable {
         // Get keyboard input
         keyManager.tick();
 
+        // Save the game data
+        if (keyManager.g) {
+            saveData();
+        }
+        
         pauseIntervalCounter++;
         if (keyManager.p) {
             if (pauseIntervalCounter > pauseInterval) {
@@ -186,7 +196,12 @@ public class Game implements Runnable {
                 g.setFont(pauseFont);
                 g.drawString("PAUSED", getWidth() / 6 + 18, getHeight() / 2);
             }
-             
+            
+            if (saved) {
+                saved = false;
+                showMessage(g, "SAVED");
+            }
+            
             if (won) {
                 g.setFont(pauseFont);
                 g.drawString("YOU WIN!", getWidth() / 6 + 5, getHeight() / 2);                
@@ -217,6 +232,50 @@ public class Game implements Runnable {
                 ie.printStackTrace();
             }
         }
+    }
+    
+    /**
+     * Saves the data to a file
+     */
+    public void saveData() {
+        try {
+            PrintWriter fileOut = new PrintWriter(new FileWriter(fileName));
+        
+            // Print score.
+            fileOut.println(getScore());
+            // Print the ball's x, y, xSpeed and ySpeed.
+            fileOut.println(getBall().getX() + " " + getBall().getY() + " " + getBall().getXSpeed() + " " + getBall().getYSpeed());
+            // Print the bar's x and y.
+            fileOut.println(getBar().getX() + " " + getBar().getY());
+            
+            // Print blocks' hits left. E.g.:
+            // 3 2 3 3 2 1 2 2 1 ...
+            for (Block block : blocks) {
+                fileOut.print(block.getHits() + " ");
+            }
+            
+            fileOut.close();
+            
+            System.out.println("Game saved.");
+            saved = true;
+            
+        } catch (IOException ex) {
+            System.out.println("ERROR: couldn't save data.");
+            ex.printStackTrace();
+        }
+        
+    }
+    
+    /**
+     * To display titles in the middle of the screen
+     * @param g
+     * @param text
+     */
+    public void showMessage(Graphics g, String text) {
+        g.setColor(Color.black);
+        g.setFont(pauseFont);
+        
+        g.drawString(text, getWidth() / 4 + 5, getHeight() / 2);
     }
 
     /**

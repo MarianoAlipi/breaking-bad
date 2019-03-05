@@ -18,7 +18,7 @@ public class Bar extends Item{
     private boolean collision;
     private Game game;
     
-    public Bar(int x, int y, int width, int height, Game game){
+    public Bar(int x, int y, int width, int height, Game game) {
       //send x and y to the Item constructor
       super(x, y);
       this.width = width;
