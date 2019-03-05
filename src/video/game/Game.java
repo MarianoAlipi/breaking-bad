@@ -28,7 +28,7 @@ public class Game implements Runnable {
     private Thread thread;
     private boolean running;            //sets up the game
     private boolean paused;             // to pause the game
-    private boolean won;                // to check when the player wins
+    private byte gameState;              // flag for the game state. 0: playing 1: lost 2: won
     private int pauseInterval;          // to set an interval for pausing
     private int pauseIntervalCounter;   // to count the frames between pauses
     private Font pauseFont;             // the font for the "PAUSED" text
@@ -40,7 +40,7 @@ public class Game implements Runnable {
     private int score;                  // the player's score
     private KeyManager keyManager;      //manages the keyboard
     private String fileName;            // save-file's name
-    private byte savedLoaded;           // flag to show a saved message for a few frames. 0: nonoe 1: saved 2; loaded
+    private byte savedLoaded;           // flag to show a saved message for a few frames. 0: none 1: saved 2; loaded
     private int framesCounter;          // to count the duration of the save/loaded message
 
     public Game(String title, int width, int height) {
@@ -49,7 +49,7 @@ public class Game implements Runnable {
         this.height = height;
         running = false;
         paused = false;
-        won = false;
+        gameState = 0;
         pauseInterval = 10;
         pauseFont = new Font("Arial", Font.BOLD, 70);
         scoreFont = new Font("Arial", Font.BOLD, 30);
@@ -145,14 +145,17 @@ public class Game implements Runnable {
             }
         }
         
-        if (won) {
+        // If the player won or lost
+        if (gameState == 1 || gameState == 2) {
             if (keyManager.r) {
                 // Restart the game
                 
             }
         }
+        
 
-        if (!paused && !won) {
+        // If not paused and not lost or won
+        if (!paused && gameState == 0) {
 
             // Move the bar with collision
             bar.tick();
@@ -166,7 +169,7 @@ public class Game implements Runnable {
             
             if (getBlocksLeft() <= 0) {
                 // GAME OVER: Player wins
-                won = true;
+                gameState = 2;
             }
 
             ball.tick();
@@ -222,7 +225,13 @@ public class Game implements Runnable {
                 }
             }
             
-            if (won) {
+            // If the player lost
+            if (gameState == 1) {
+                g.setFont(pauseFont);
+                g.drawString("GAME OVER", getWidth() / 12, getHeight() / 2);                
+            }
+            // If the player won
+            else if (gameState == 2) {
                 g.setFont(pauseFont);
                 g.drawString("YOU WIN!", getWidth() / 6 + 5, getHeight() / 2);                
             }
@@ -394,6 +403,14 @@ public class Game implements Runnable {
     public int getBlocksLeft() {
         return blocksLeft;
     }
+
+    /**
+     * Get gameState
+     * @return 
+     */
+    public byte getGameState() {
+        return gameState;
+    }
     
     /**
      * Set score
@@ -409,5 +426,13 @@ public class Game implements Runnable {
      */
     public void setBlocksLeft(int blocksLeft) {
         this.blocksLeft = blocksLeft;
+    }
+
+    /**
+     * Set gameState
+     * @param gameState 
+     */
+    public void setGameState(byte gameState) {
+        this.gameState = gameState;
     }
 }
