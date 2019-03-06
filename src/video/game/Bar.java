@@ -27,7 +27,7 @@ public class Bar extends Item{
       this.game = game;
       this.speed = 5;
       powerFrames = 0;
-      this.hitbox = new Rectangle(x, y, width, height / 6);
+      this.hitbox = new Rectangle(x, y + 15, width, height / 6);
       
       this.policeCarCollision = new Animation(Assets.policeCarCollision,100);
     }
@@ -87,7 +87,7 @@ public class Bar extends Item{
     //displays aka renders
     @Override
     public void render(Graphics g){
-                g.drawImage(policeCarCollision.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        g.drawImage(policeCarCollision.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
         // Draw the hitbox (for debugging)
         // g.drawRect((int)getHitbox().getX(), (int)getHitbox().getY(), (int)getHitbox().getWidth(), (int)getHitbox().getHeight());
     }

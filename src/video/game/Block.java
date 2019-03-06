@@ -71,33 +71,35 @@ public class Block extends Item {
 
     @Override
     public void render(Graphics g) {
-        if(this.hits==1){
+        if(getHits() == 1){
         g.setColor(Color.green);
         g.fillRect(x, y, width, height);
-        } else if(this.hits==2){
+        } else if(getHits() == 2){
             g.setColor(Color.yellow);
             g.fillRect(x, y, width, height);
         
-        } else if(this.hits==3){
+        } else if(getHits() == 3){
             g.setColor(Color.red);
             g.fillRect(x, y, width, height);
         
         }
-        g.setColor(Color.red);
+        g.setColor(Color.black);
         g.drawRect(x, y, width, height);
         
         // Sides hitbox
-        g.setColor(Color.blue);
-        g.drawRect(hitboxSides.x, hitboxSides.y, hitboxSides.width, hitboxSides.height);
+        //g.setColor(Color.blue);
+        //g.drawRect(hitboxSides.x, hitboxSides.y, hitboxSides.width, hitboxSides.height);
         
         // Top and bottom hitbox
-        g.setColor(Color.green);
-        g.drawRect(hitboxUpDown.x, hitboxUpDown.y, hitboxUpDown.width, hitboxUpDown.height);
+        //g.setColor(Color.green);
+        //g.drawRect(hitboxUpDown.x, hitboxUpDown.y, hitboxUpDown.width, hitboxUpDown.height);
         
         // Draw number of hits
-        g.setColor(Color.black);
-        g.setFont(new Font("Arial", Font.PLAIN, 12));
-        g.drawString("" + getHits(), getX() + getWidth() / 2, getY() + getHeight() / 2 + 5);
+        // g.setColor(Color.black);
+        // g.setFont(new Font("Arial", Font.PLAIN, 12));
+        // g.drawString("" + getHits(), getX() + getWidth() / 2, getY() + getHeight() / 2 + 5);
+        
+        g.drawImage(Assets.meth[getHits() - 1], getX(), getY(), getWidth(), getHeight(), null);
     }
     
     /**

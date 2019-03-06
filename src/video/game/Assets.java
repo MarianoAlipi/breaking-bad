@@ -19,6 +19,8 @@ public class Assets {
     public static BufferedImage policeCarCollision[];
     public static BufferedImage grenadeSprite;
     public static BufferedImage grenadeRotate[];
+    public static BufferedImage meth[];
+            
     public static void init() {
         background = ImageLoader.loadImage("/images/background.png");
         bar = ImageLoader.loadImage("/images/policeCar.png");
@@ -37,6 +39,11 @@ public class Assets {
         }
         for(int i = 0; i < 8; i++){
             grenadeRotate[i] = grenade.crop(i * 246,0,246,285);
+        }
+        
+        meth = new BufferedImage[3];
+        for (int i = 1; i <= 3; i++) {
+            meth[i - 1] = ImageLoader.loadImage("/images/meth" + i + ".png");
         }
     }
 }
