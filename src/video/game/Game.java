@@ -42,8 +42,9 @@ public class Game implements Runnable {
     private String fileName;            // save-file's name
     private byte savedLoaded;           // flag to show a saved message for a few frames. 0: none 1: saved 2; loaded
     private int framesCounter;          // to count the duration of the save/loaded message
-    private Power power;
+    private Power power;                // the current power item in the game
     private byte powerState;            // flag to determine the power state. 0: none 1: good 2: bad
+    private boolean ballPushed;         // flag to know if the ball has been pushed (first hit)
 
     public Game(String title, int width, int height) {
         this.title = title;
@@ -62,6 +63,7 @@ public class Game implements Runnable {
         framesCounter = 0;
         power = null;
         powerState = 0;
+        ballPushed = false;
     }
 
     public int getWidth() {
@@ -76,7 +78,7 @@ public class Game implements Runnable {
         display = new Display(title, getWidth(), getHeight());
         Assets.init();
         bar = new Bar(getWidth() / 2 - 50, getHeight() - 50, 100, 50, this);
-        ball = new Ball(getWidth() / 8, getHeight() / 2 + 30, 30, 30, this);
+        ball = new Ball(getWidth() / 2 - 15, getHeight() - 80, 30, 30, this);
 
         int blockNo = 0, hits = 3, counter = 0;
         blocksLeft = 48;
@@ -131,6 +133,23 @@ public class Game implements Runnable {
         
         // Get keyboard input
         keyManager.tick();
+        
+        // If the ball isn't moving, let the user push it (first hit)
+        if (!ballPushed) {
+            if (keyManager.left) {
+                getBall().setXSpeed(-5);
+                getBall().setYSpeed(-6);
+                getBall().setSpeed( Math.sqrt((-5 * -5) + (-6 * -6) ) );
+                ballPushed = true;
+            }
+            
+            if (keyManager.right) {
+                getBall().setXSpeed(5);
+                getBall().setYSpeed(-6);
+                getBall().setSpeed( Math.sqrt((-5 * -5) + (-6 * -6) ) );
+                ballPushed = true;
+            }
+        }
         
         // Save the game data
         if (keyManager.g) {
@@ -295,7 +314,8 @@ public class Game implements Runnable {
         setGameState((byte)0);
         setPaused(false);
         bar = new Bar(getWidth() / 2 - 50, getHeight() - 50, 100, 50, this);
-        ball = new Ball(getWidth() / 8, getHeight() / 2 + 30, 30, 30, this);
+        ball = new Ball(getWidth() / 2 - 15, getHeight() - 80, 30, 30, this);
+        ballPushed = false;
         setPower(null);
         setPowerState((byte)0);
         

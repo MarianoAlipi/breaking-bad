@@ -46,7 +46,7 @@ public class Block extends Item {
                     setVisible(false);
                     game.setBlocksLeft(game.getBlocksLeft() - 1);
                     
-                    if (Math.floor(Math.random() * 7) == 0)
+                    if (Math.floor(Math.random() * 5) == 0)
                         game.setPower(new Power(getX() + getWidth() / 2, getY(), 32, 32, Power.Type.values()[(int)Math.floor(Math.random() * Power.Type.values().length)], game));
                     
                 }
