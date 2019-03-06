@@ -72,7 +72,7 @@ public class Game implements Runnable {
         display = new Display(title, getWidth(), getHeight());
         Assets.init();
         bar = new Bar(getWidth() / 2 - 50, getHeight() - 50, 100, 50, this);
-        ball = new Ball(getWidth() / 4, getHeight() - 300, 30, 30, this);
+        ball = new Ball(getWidth() / 4, getHeight() - 300, 60, 60, this);
 
         int blockNo = 0, hits = 3, counter = 0;
         blocksLeft = 48;

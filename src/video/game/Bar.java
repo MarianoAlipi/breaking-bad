@@ -2,7 +2,6 @@ package video.game;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
-
 /**
  *
  * @author MarcelA00821875
@@ -16,9 +15,10 @@ public class Bar extends Item{
     */
     private int speed;
     private boolean collision;
+    private Animation policeCarCollision;
     private Game game;
     
-    public Bar(int x, int y, int width, int height, Game game) {
+    public Bar(int x, int y, int width, int height, Game game){
       //send x and y to the Item constructor
       super(x, y);
       this.width = width;
@@ -26,6 +26,8 @@ public class Bar extends Item{
       this.game = game;
       this.speed = 5;
       this.hitbox = new Rectangle(x, y, width, height / 6);
+      
+      this.policeCarCollision = new Animation(Assets.policeCarCollision,100);
     }
     
     public int getSpeed() {return speed;}
@@ -61,11 +63,14 @@ public class Bar extends Item{
         
         // Relocate hitbox
         hitbox.setLocation(getX(), getY()+15);
+        
+        //update collision animation
+        this.policeCarCollision.tick();
     }
     //displays aka renders
     @Override
-    public void render(Graphics g) {
-        g.drawImage(Assets.bar, getX(), getY(), getWidth(), getHeight(), null);
+    public void render(Graphics g){
+                g.drawImage(policeCarCollision.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
         // Draw the hitbox (for debugging)
        //g.drawRect((int)getHitbox().getX(), (int)getHitbox().getY(), (int)getHitbox().getWidth(), (int)getHitbox().getHeight());
     }

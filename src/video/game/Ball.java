@@ -15,6 +15,7 @@ public class Ball extends Item{
     */
     private double xSpeed, ySpeed, speed;
     private boolean collision;
+    private Animation grenadeRotate;
     private Game game;
     
     public Ball(int x, int y, int width, int height, Game game) {
@@ -28,6 +29,7 @@ public class Ball extends Item{
       this.speed = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
       this.collision = false;
       this.hitbox = new Rectangle(x, y, width, height);
+      this.grenadeRotate = new Animation(Assets.grenadeRotate,100);
     }
     
     public double getXSpeed() {return xSpeed;}
@@ -74,6 +76,9 @@ public class Ball extends Item{
         // Relocate hitbox
         hitbox.setLocation(getX(), getY());
         setCollision(false);
+        
+        //update collision animation
+        this.grenadeRotate.tick();
         
         // Check for collision with bar
         // The farther from the center, the more horizontal the angle is.
@@ -123,7 +128,7 @@ public class Ball extends Item{
     //displays aka renders
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.ball, getX(), getY(), getWidth(), getHeight(), null);
+                g.drawImage(grenadeRotate.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
       
         // Draw the hitbox (for debugging)
         //g.drawRect(getX(), getY(), getWidth(), getHeight());
