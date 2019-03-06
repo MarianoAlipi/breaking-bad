@@ -28,7 +28,7 @@ public class Ball extends Item{
       this.ySpeed = 0; // 6
       this.speed = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
       this.collision = false;
-      this.hitbox = new Rectangle(x, y, width, height);
+      this.hitbox = new Rectangle(x + 12, y + 12, width - 22, height - 22);
       this.grenadeRotate = new Animation(Assets.grenadeRotate,100);
     }
     
@@ -36,14 +36,7 @@ public class Ball extends Item{
     public double getYSpeed() {return ySpeed;}
     public double getSpeed() {return speed;}
     public boolean isCollision() {return collision;}
-    /**
-     * Get the hitbox
-     * @return hitbox
-     */
-    public Rectangle getHitbox() {
-        return hitbox;
-    }
-    
+
     public void setXSpeed(double xSpeed) {this.xSpeed = xSpeed;}
     public void setYSpeed(double ySpeed) {this.ySpeed = ySpeed;}
     public void setSpeed(double speed) {this.speed = speed;}
@@ -66,8 +59,6 @@ public class Ball extends Item{
             setXSpeed(-1 * getXSpeed());
         }
         if (getY() + getHeight() > game.getHeight()) {
-            //setY(game.getHeight() - getHeight());
-            //setYSpeed(-1 * getYSpeed());
             game.setGameState((byte)1);
         } else if (getY() < 0) {
             setY(0);
@@ -75,7 +66,7 @@ public class Ball extends Item{
         }
         
         // Relocate hitbox
-        hitbox.setLocation(getX(), getY());
+        hitbox.setLocation(getX() + 12, getY() + 12);
         setCollision(false);
         
         //update collision animation
@@ -129,9 +120,9 @@ public class Ball extends Item{
     //displays aka renders
     @Override
     public void render(Graphics g) {
-                g.drawImage(grenadeRotate.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        g.drawImage(grenadeRotate.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
       
         // Draw the hitbox (for debugging)
-        //g.drawRect(getX(), getY(), getWidth(), getHeight());
+        // g.drawRect((int)getHitbox().getX(), (int)getHitbox().getY(), (int)getHitbox().getWidth(), (int)getHitbox().getHeight());
     }
 }

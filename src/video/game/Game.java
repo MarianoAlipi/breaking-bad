@@ -78,7 +78,7 @@ public class Game implements Runnable {
         display = new Display(title, getWidth(), getHeight());
         Assets.init();
         bar = new Bar(getWidth() / 2 - 50, getHeight() - 50, 100, 50, this);
-        ball = new Ball(getWidth() / 2 - 30, getHeight() - 110, 60, 60, this);
+        ball = new Ball(getWidth() / 2 - 30, getHeight() - 110, 50, 50, this);
 
         int blockNo = 0, hits = 3, counter = 0;
         blocksLeft = 48;
@@ -314,7 +314,7 @@ public class Game implements Runnable {
         setGameState((byte)0);
         setPaused(false);
         bar = new Bar(getWidth() / 2 - 50, getHeight() - 50, 100, 50, this);
-        ball = new Ball(getWidth() / 2 - 30, getHeight() - 110, 60, 60, this);
+        ball = new Ball(getWidth() / 2 - 30, getHeight() - 110, 50, 50, this);
         ballPushed = false;
         setPower(null);
         setPowerState((byte)0);
