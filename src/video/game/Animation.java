@@ -31,6 +31,7 @@ public class Animation {
         lastTime = System.currentTimeMillis();
     }
     
+    public int getIndex() {return index;}
     /**
      * To update the animation to get the right index of the frame to render.
      */

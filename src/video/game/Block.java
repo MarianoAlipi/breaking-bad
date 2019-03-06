@@ -71,8 +71,18 @@ public class Block extends Item {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.white);
+        if(this.hits==1){
+        g.setColor(Color.green);
         g.fillRect(x, y, width, height);
+        } else if(this.hits==2){
+            g.setColor(Color.yellow);
+            g.fillRect(x, y, width, height);
+        
+        } else if(this.hits==3){
+            g.setColor(Color.red);
+            g.fillRect(x, y, width, height);
+        
+        }
         g.setColor(Color.red);
         g.drawRect(x, y, width, height);
         
