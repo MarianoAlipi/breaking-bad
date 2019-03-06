@@ -20,8 +20,15 @@ public abstract class Item {
      * @param y <b>y</b> position of the object
      */
     public Item(int x, int y){
-      this.x = x;
-      this.y = y;
+        this.x = x;
+        this.y = y;
+    }
+
+    public Item(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
     }    
 
     public void setX(int x) {this.x = x;}
@@ -32,6 +39,7 @@ public abstract class Item {
     public int getY() {return y;}
     public int getWidth() {return width;}
     public int getHeight() {return height;}
+    public Rectangle getHitbox() {return hitbox;}
 
     /**
      * To update the positions of the item for every tick

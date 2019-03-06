@@ -17,6 +17,7 @@ public class Bar extends Item{
     private int speed;
     private boolean collision;
     private Game game;
+    private int powerFrames;
     
     public Bar(int x, int y, int width, int height, Game game) {
       //send x and y to the Item constructor
@@ -25,18 +26,12 @@ public class Bar extends Item{
       this.height = height;
       this.game = game;
       this.speed = 5;
-      this.hitbox = new Rectangle(x, y, width, height / 6);
+      powerFrames = 0;
+      this.hitbox = new Rectangle(x, y + 15, width, height / 6);
     }
     
     public int getSpeed() {return speed;}
     public boolean getCollision() {return collision;}
-    /**
-     * Get the hitbox
-     * @return hitbox
-     */
-    public Rectangle getHitbox() {
-        return hitbox;
-    }
     
     public void setSpeed(int speed) {this.speed = speed;}
     public void setCollision(boolean collision) {this.collision = collision;}
@@ -60,17 +55,35 @@ public class Bar extends Item{
         }
         
         // Relocate hitbox
-        hitbox.setLocation(getX(), getY()+15);
+        hitbox.setLocation(getX(), getY() + 15);
+        
+        // Apply power effect
+        if (game.getPowerState() == 1 || game.getPowerState() == 2) {
+            if (powerFrames++ <= 600) {
+                // Good power
+                if (game.getPowerState() == 1) {
+                    setWidth(120);
+                    hitbox = new Rectangle(getX(), getY() + 15, getWidth(), getHeight() / 6);
+                } else if (game.getPowerState() == 2) {
+                    // Bad power
+                    setWidth(80);
+                    hitbox = new Rectangle(getX(), getY() + 15 , getWidth(), getHeight() / 6);
+                }
+            } else {
+                powerFrames = 0;
+                game.setPowerState((byte)0);
+                setWidth(100);
+                hitbox = new Rectangle(getX(), getY() + 15, getWidth(), getHeight() / 6);
+            }
+        }
+        
     }
     //displays aka renders
     @Override
     public void render(Graphics g) {
         g.drawImage(Assets.bar, getX(), getY(), getWidth(), getHeight(), null);
         // Draw the hitbox (for debugging)
-       //g.drawRect((int)getHitbox().getX(), (int)getHitbox().getY(), (int)getHitbox().getWidth(), (int)getHitbox().getHeight());
+        // g.drawRect((int)getHitbox().getX(), (int)getHitbox().getY(), (int)getHitbox().getWidth(), (int)getHitbox().getHeight());
     }
-    //Make sure collision animation lasts the nessesary seconds 
-    //tick starts the process
-    //render makes sure that it finishes at the seconds necessary
 
 }

@@ -42,6 +42,8 @@ public class Game implements Runnable {
     private String fileName;            // save-file's name
     private byte savedLoaded;           // flag to show a saved message for a few frames. 0: none 1: saved 2; loaded
     private int framesCounter;          // to count the duration of the save/loaded message
+    private Power power;
+    private byte powerState;            // flag to determine the power state. 0: none 1: good 2: bad
 
     public Game(String title, int width, int height) {
         this.title = title;
@@ -55,9 +57,11 @@ public class Game implements Runnable {
         scoreFont = new Font("Arial", Font.BOLD, 30);
         score = 0;
         keyManager = new KeyManager();
-        fileName = "BreakingBad-save.txt";
+        fileName = "BreakingBad_save.txt";
         savedLoaded = 0;
         framesCounter = 0;
+        power = null;
+        powerState = 0;
     }
 
     public int getWidth() {
@@ -124,7 +128,7 @@ public class Game implements Runnable {
     }
 
     private void tick() {
-
+        
         // Get keyboard input
         keyManager.tick();
         
@@ -138,6 +142,7 @@ public class Game implements Runnable {
             setGameState((byte)0);
         }
         
+        // To pause the game
         pauseIntervalCounter++;
         if (keyManager.p) {
             if (pauseIntervalCounter > pauseInterval) {
@@ -167,14 +172,23 @@ public class Game implements Runnable {
                     block.tick();
                 }
             }
-            
+                            
+            // Player wins
             if (getBlocksLeft() <= 0) {
                 // GAME OVER: Player wins
                 gameState = 2;
             }
 
+            // Tick the power item
+            if (getPower() != null) {
+                if (!getPower().isSpawned())
+                    setPower(null);
+                else
+                    getPower().tick();
+            }
             ball.tick();
         }
+        
     }
 
     private void render() {
@@ -226,6 +240,11 @@ public class Game implements Runnable {
                 }
             }
             
+            if (getPower() != null) {
+                if (getPower().isSpawned())
+                    getPower().render(g);
+            }
+            
             // If the player lost
             if (gameState == 1) {
                 g.setFont(pauseFont);
@@ -240,7 +259,7 @@ public class Game implements Runnable {
                 g.setFont(new Font("Arial", Font.PLAIN, 40));
                 g.drawString("Press R to restart.", getWidth() / 6 + 15, getHeight() / 2 + 40);
             }
-
+            
             // Prevents stutter on Linux.
             Toolkit.getDefaultToolkit().sync();
             bs.show();
@@ -277,7 +296,9 @@ public class Game implements Runnable {
         setPaused(false);
         bar = new Bar(getWidth() / 2 - 50, getHeight() - 50, 100, 50, this);
         ball = new Ball(getWidth() / 8, getHeight() / 2 + 30, 30, 30, this);
-
+        setPower(null);
+        setPowerState((byte)0);
+        
         int blockNo = 0, hits = 3, counter = 0;
         blocksLeft = 48;
         blocks = new Block[blocksLeft];
@@ -379,6 +400,9 @@ public class Game implements Runnable {
                 
                 fileIn.close();
                 
+                // Set power to null
+                setPower(null);
+                
                 savedLoaded = 2;
                 
             } catch (IOException ex) {
@@ -444,6 +468,22 @@ public class Game implements Runnable {
     public byte getGameState() {
         return gameState;
     }
+
+    /**
+     * Get power
+     * @return power
+     */
+    public Power getPower() {
+        return power;
+    }
+
+    /**
+     * Get powerState
+     * @return powerState
+     */
+    public byte getPowerState() {
+        return powerState;
+    }
     
     /**
      * Set score
@@ -477,4 +517,19 @@ public class Game implements Runnable {
         this.gameState = gameState;
     }
 
+    /**
+     * Set power
+     * @param power 
+     */
+    public void setPower(Power power) {
+        this.power = power;
+    }
+
+    /**
+     * Set powerState
+     * @param powerState 
+     */
+    public void setPowerState(byte powerState) {
+        this.powerState = powerState;
+    }
 }

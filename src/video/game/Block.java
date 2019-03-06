@@ -45,6 +45,10 @@ public class Block extends Item {
                 if (--hits <= 0) {
                     setVisible(false);
                     game.setBlocksLeft(game.getBlocksLeft() - 1);
+                    
+                    if (Math.floor(Math.random() * 7) == 0)
+                        game.setPower(new Power(getX() + getWidth() / 2, getY(), 32, 32, Power.Type.values()[(int)Math.floor(Math.random() * Power.Type.values().length)], game));
+                    
                 }
 
                 game.getBall().setYSpeed(-1 * game.getBall().getYSpeed());
