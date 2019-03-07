@@ -324,6 +324,7 @@ public class Game implements Runnable {
         blocks = new Block[blocksLeft];
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 6; j++) {
+                blocks[blockNo] = null;
                 blocks[blockNo] = new Block(j * 80 + 10, i * 30 + 40, hits, this);
                 blockNo++;
             }

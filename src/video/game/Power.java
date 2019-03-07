@@ -21,6 +21,7 @@ public class Power extends Item {
     private BufferedImage sprite;
     private int speed;
     private boolean spawned;
+    private SoundClip ping;
     private Game game;
     
     public Power (int x, int y, int width, int height, Type type, Game game) {
@@ -30,6 +31,7 @@ public class Power extends Item {
         this.speed = (int) Math.floor(Math.random() * 3 + 1);
         this.spawned = true;
         this.hitbox = new Rectangle(x, y, width, height);
+        this.ping = new SoundClip("/sounds/ping.wav");
         this.game = game;
     }
     
@@ -52,6 +54,7 @@ public class Power extends Item {
             if (getHitbox().intersects(game.getBar().getHitbox())) {
                 game.setPowerState( (byte) (( Type.values()[0] == getType() ) ? 1 : 2) );
                 setSpawned(false);
+                ping.play();
             }
             
         }

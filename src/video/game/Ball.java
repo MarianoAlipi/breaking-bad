@@ -16,6 +16,7 @@ public class Ball extends Item{
     private double xSpeed, ySpeed, speed;
     private boolean collision;
     private Animation grenadeRotate;
+    private SoundClip bounce;
     private Game game;
     
     public Ball(int x, int y, int width, int height, Game game) {
@@ -29,6 +30,7 @@ public class Ball extends Item{
       this.speed = Math.sqrt( (xSpeed * xSpeed) + (ySpeed * ySpeed) );
       this.collision = false;
       this.hitbox = new Rectangle(x + 12, y + 12, width - 22, height - 22);
+      this.bounce = new SoundClip("/sounds/bounce.wav");
       this.grenadeRotate = new Animation(Assets.grenadeRotate,100);
     }
     
@@ -54,12 +56,15 @@ public class Ball extends Item{
         if (getX() + getWidth() > game.getWidth()) {
             setX(game.getWidth() - getWidth());
             setXSpeed(-1 * getXSpeed());
+            bounce.play();
         } else if (getX() < 0) {
             setX(0);
             setXSpeed(-1 * getXSpeed());
+            bounce.play();
         }
         if (getY() + getHeight() > game.getHeight()) {
             game.setGameState((byte)1);
+            bounce.play();
         } else if (getY() < 0) {
             setY(0);
             setYSpeed(-1 * getYSpeed());
@@ -114,6 +119,7 @@ public class Ball extends Item{
             // Update x and y speed.
             setXSpeed( (left ? -1 : 1) * getSpeed() * Math.cos(angle) );
             setYSpeed( -1 * getSpeed() * Math.sin(angle) );
+            bounce.play();
         }
     }
     

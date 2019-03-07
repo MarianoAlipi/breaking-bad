@@ -22,6 +22,7 @@ public class Block extends Item {
     
     private Rectangle hitboxSides;
     private Rectangle hitboxUpDown;
+    private SoundClip explosion;
     
     public Block(int x, int y, int hits, Game g) {
         super(x, y);
@@ -31,6 +32,7 @@ public class Block extends Item {
         this.game = g;
         this.hitboxSides = new Rectangle(x, y + (height / 6), width, (int) (height * 0.7));
         this.hitboxUpDown = new Rectangle(x + (width / 15), y, (int) (width * 0.87), height);
+        this.explosion = new SoundClip("/sounds/explosion.wav");
         this.visible = true;
     }
 
@@ -66,6 +68,9 @@ public class Block extends Item {
                 game.getBall().setCollision(true);
                 game.setScore(game.getScore() + 1);
             }
+            
+            if (hits <= 0)
+                explosion.play();
         }
     }
 
