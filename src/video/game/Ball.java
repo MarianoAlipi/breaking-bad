@@ -9,16 +9,21 @@ import java.awt.Rectangle;
  * @author MarianoA00822247
  */
 public class Ball extends Item{
-    /*!Important: Now we have to use 
-        public enum Direcction
-        to save the direction and stuff
-    */
-    private double xSpeed, ySpeed, speed;
-    private boolean collision;
-    private Animation grenadeRotate;
-    private SoundClip bounce;
-    private Game game;
     
+    private double xSpeed, ySpeed, speed;   // the ball's horizontal, vertical and total speed
+    private boolean collision;              // to check if there's a collision this frame
+    private Animation grenadeRotate;        // the animation to rotate the ball
+    private SoundClip bounce;               // sound effect when the ball bounces off the bar
+    private Game game;                      // the running game
+    
+    /**
+     * Constructor for the ball
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param game 
+     */
     public Ball(int x, int y, int width, int height, Game game) {
       //send x and y to the Item constructor
       super(x, y);
@@ -34,15 +39,69 @@ public class Ball extends Item{
       this.grenadeRotate = new Animation(Assets.grenadeRotate,100);
     }
     
-    public double getXSpeed() {return xSpeed;}
-    public double getYSpeed() {return ySpeed;}
-    public double getSpeed() {return speed;}
-    public boolean isCollision() {return collision;}
+    /**
+     * Get xSpeed
+     * @return xSpeed
+     */
+    public double getXSpeed() {
+        return xSpeed;
+    }
+    
+    /**
+     * Get ySpeed
+     * @return ySpeed
+     */
+    public double getYSpeed() {
+        return ySpeed;
+    }
+    
+    /**
+     * Get speed
+     * @return speed
+     */
+    public double getSpeed() {
+        return speed;
+    }
+    
+    /**
+     * Get collision
+     * @return collision
+     */
+    public boolean isCollision() {
+        return collision;
+    }
 
-    public void setXSpeed(double xSpeed) {this.xSpeed = xSpeed;}
-    public void setYSpeed(double ySpeed) {this.ySpeed = ySpeed;}
-    public void setSpeed(double speed) {this.speed = speed;}
-    public void setCollision(boolean collision) {this.collision = collision;}
+    /**
+     * Set xSpeed
+     * @param xSpeed 
+     */
+    public void setXSpeed(double xSpeed) {
+        this.xSpeed = xSpeed;
+    }
+    
+    /**
+     * Set ySpeed
+     * @param ySpeed 
+     */
+    public void setYSpeed(double ySpeed) {
+        this.ySpeed = ySpeed;
+    }
+    
+    /**
+     * Set speed
+     * @param speed 
+     */
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+    
+    /**
+     * Set collision
+     * @param collision 
+     */
+    public void setCollision(boolean collision) {
+        this.collision = collision;
+    }
     
     //tick is used to check bar
     @Override

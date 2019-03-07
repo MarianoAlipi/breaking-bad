@@ -46,6 +46,12 @@ public class Game implements Runnable {
     private byte powerState;            // flag to determine the power state. 0: none 1: good 2: bad
     private boolean ballPushed;         // flag to know if the ball has been pushed (first hit)
 
+    /**
+     * Constructor
+     * @param title
+     * @param width
+     * @param height 
+     */
     public Game(String title, int width, int height) {
         this.title = title;
         this.width = width;
@@ -66,14 +72,9 @@ public class Game implements Runnable {
         ballPushed = false;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
+    /**
+     * Initialize the game
+     */
     private void init() {
         display = new Display(title, getWidth(), getHeight());
         Assets.init();
@@ -123,10 +124,6 @@ public class Game implements Runnable {
             }
         }
         stop();
-    }
-
-    public KeyManager getKeyManager() {
-        return keyManager;
     }
 
     private void tick() {
@@ -449,6 +446,22 @@ public class Game implements Runnable {
     }
 
     /**
+     * Get width
+     * @return width
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * Get height
+     * @return height
+     */
+    public int getHeight() {
+        return height;
+    }
+    
+    /**
      * Get the bar
      *
      * @return
@@ -466,6 +479,14 @@ public class Game implements Runnable {
         return ball;
     }
 
+    /**
+     * Get keyManager
+     * @return keyManager
+     */
+    public KeyManager getKeyManager() {
+        return keyManager;
+    }
+    
     /**
      * Get score
      * @return score

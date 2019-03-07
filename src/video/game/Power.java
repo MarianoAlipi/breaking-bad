@@ -16,14 +16,23 @@ import java.awt.image.BufferedImage;
  */
 public class Power extends Item {
 
-    public enum Type {good, bad};
-    private Type type;
-    private BufferedImage sprite;
-    private int speed;
-    private boolean spawned;
-    private SoundClip ping;
-    private Game game;
+    public enum Type {good, bad};   // the type of power enum
+    private Type type;              // the type of power
+    private BufferedImage sprite;   // the power's sprite
+    private int speed;              // the power's speed
+    private boolean spawned;        // to check if the power is spawned
+    private SoundClip ping;         // sound effect for when the power hits the bar
+    private Game game;              // the running game
     
+    /**
+     * Constructor for power
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param type
+     * @param game 
+     */
     public Power (int x, int y, int width, int height, Type type, Game game) {
         super(x, y, width, height);
         this.type = type;
@@ -55,11 +64,8 @@ public class Power extends Item {
                 game.setPowerState( (byte) (( Type.values()[0] == getType() ) ? 1 : 2) );
                 setSpawned(false);
                 ping.play();
-            }
-            
+            }   
         }
-            
-        
     }
 
     @Override

@@ -9,11 +9,12 @@ import java.awt.Rectangle;
  * @author MarianoA00822247
  */
 public abstract class Item {
-    protected int x; //Stores x position
-    protected int y; //Stores y position
-    protected int width;
-    protected int height;
-    protected Rectangle hitbox;
+    protected int x;        // Stores x position
+    protected int y;        // Stores y position
+    protected int width;    // The width  
+    protected int height;   // The height
+    protected Rectangle hitbox; // The hitbox
+    
     /**
      * Set initial values to create the item
      * @param x <b>x</b> position of the object
@@ -30,16 +31,78 @@ public abstract class Item {
         this.width = width;
         this.height = height;
     }    
+    
+    /**
+     * Get x
+     * @return x 
+     */
+    public int getX() {
+        return x;
+    }
+    
+    /**
+     * Get y
+     * @return y 
+     */
+    public int getY() {
+        return y;
+    }
+    
+    /**
+     * Get width
+     * @return width
+     */
+    public int getWidth() {
+        return width;
+    }
+    
+    /**
+     * Get height
+     * @return height
+     */
+    public int getHeight() {
+        return height;
+    }
+    
+    /**
+     * Get hitbox
+     * @return hitbox
+     */
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
 
-    public void setX(int x) {this.x = x;}
-    public void setY(int y) {this.y = y;}
-    public void setWidth(int width)   {this.width = width;}
-    public void setHeight(int height) {this.height = height;}
-    public int getX() {return x;}
-    public int getY() {return y;}
-    public int getWidth() {return width;}
-    public int getHeight() {return height;}
-    public Rectangle getHitbox() {return hitbox;}
+    /**
+     * Set x
+     * @param x 
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+    
+    /**
+     * Set y
+     * @param y 
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+    
+    /**
+     * Set width
+     * @param width 
+     */
+    public void setWidth(int width) {
+        this.width = width;
+    }
+    
+    /**
+     * Set height
+     * @param height 
+     */
+    public void setHeight(int height) {
+        this.height = height;
+    }
 
     /**
      * To update the positions of the item for every tick

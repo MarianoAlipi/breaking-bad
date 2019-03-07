@@ -7,18 +7,21 @@ import java.awt.Rectangle;
  * @author MarcelA00821875
  * @author MarianoA00822247
  */
-public class Bar extends Item{
-
-    /*!Important: Now we have to use 
-        public enum Direcction
-        to save the direction and stuff
-    */
-    private int speed;
-    private boolean collision;
-    private Animation policeCarCollision;
-    private Game game;
-    private int powerFrames;
+public class Bar extends Item {
     
+    private int speed;                      // the bar's speed
+    private Animation policeCarCollision;   // the bar's animation
+    private Game game;                      // the running game
+    private int powerFrames;                // duration of the power
+    
+    /**
+     * Constructor for the bar
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @param game 
+     */
     public Bar(int x, int y, int width, int height, Game game){
       //send x and y to the Item constructor
       super(x, y);
@@ -32,13 +35,23 @@ public class Bar extends Item{
       this.policeCarCollision = new Animation(Assets.policeCarCollision,100);
     }
     
-    public int getSpeed() {return speed;}
-    public boolean getCollision() {return collision;}
+    /**
+     * Get speed
+     * @return speed
+     */
+    public int getSpeed() {
+        return speed;
+    }
     
-    public void setSpeed(int speed) {this.speed = speed;}
-    public void setCollision(boolean collision) {this.collision = collision;}
+    /**
+     * Set speed
+     * @param speed 
+     */
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
     
-    //tick is used to check bar
+    //tick is used to tick bar
     @Override
     public void tick() {
         //moving bar depending on flags
@@ -84,7 +97,7 @@ public class Bar extends Item{
         //update collision animation
         this.policeCarCollision.tick();
     }
-    //displays aka renders
+    
     @Override
     public void render(Graphics g){
         g.drawImage(policeCarCollision.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);

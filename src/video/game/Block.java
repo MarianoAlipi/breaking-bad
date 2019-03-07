@@ -6,7 +6,6 @@
 package video.game;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -20,10 +19,17 @@ public class Block extends Item {
     private int hits;           // the number of hits left to destroy the block
     private boolean visible;    // to show or hide the block whether it's destroyed or not
     
-    private Rectangle hitboxSides;
-    private Rectangle hitboxUpDown;
-    private SoundClip explosion;
+    private Rectangle hitboxSides;  // the sides' hitbox
+    private Rectangle hitboxUpDown; // the top and bottom hitbox
+    private SoundClip explosion;    // sound effect for when the block breaks
     
+    /**
+     * Constructor for the blocks
+     * @param x
+     * @param y
+     * @param hits
+     * @param g 
+     */
     public Block(int x, int y, int hits, Game g) {
         super(x, y);
         this.width = 75;
