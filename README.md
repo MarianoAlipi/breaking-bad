@@ -1,2 +1,3 @@
-# BreakingBad
-Breaking bad videogame homework for the videogame class
+# Breaking Bad
+Breaking Bad themed Brick Breaker game.
+Made with Java 8.
